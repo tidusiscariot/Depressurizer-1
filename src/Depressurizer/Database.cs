@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using Depressurizer.Core;
 using Depressurizer.Core.Enums;
 using Depressurizer.Core.Helpers;
@@ -583,38 +582,31 @@ namespace Depressurizer
 
         public void Load(string path)
         {
-            lock (SyncRoot)
+            Logger.Info("Database: Loading database from '{0}'.", path);
+            if (!File.Exists(path))
             {
-                Logger.Info("Database: Loading database from '{0}'.", path);
-                if (!File.Exists(path))
-                {
-                    Logger.Warn("Database: Database file not found at '{0}'.", path);
+                Logger.Warn("Database: Database file not found at '{0}'.", path);
 
-                    return;
-                }
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-
-                using (StreamReader file = File.OpenText(path))
-                {
-                    JsonSerializer serializer = new JsonSerializer
-                    {
-#if DEBUG
-                        Formatting = Formatting.Indented
-#endif
-                    };
-
-                    Database database = (Database)serializer.Deserialize(file, typeof(Database));
-                    foreach (DatabaseEntry entry in database.DatabaseEntries.Values)
-                    {
-                        Add(entry);
-                    }
-                }
-
-                sw.Stop();
-                Logger.Info("Database: Loaded database from '{0}', in {1}ms.", path, sw.ElapsedMilliseconds);
+                return;
             }
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            using (StreamReader file = File.OpenText(path))
+            {
+                JsonSerializer serializer = new JsonSerializer
+                {
+#if DEBUG
+                    Formatting = Formatting.Indented
+#endif
+                };
+
+                _instance = (Database) serializer.Deserialize(file, typeof(Database));
+            }
+
+            sw.Stop();
+            Logger.Info("Database: Loaded database from '{0}', in {1}ms.", path, sw.ElapsedMilliseconds);
         }
 
         public bool Remove(int appId)
@@ -629,13 +621,10 @@ namespace Depressurizer
 
         public void Reset()
         {
-            lock (SyncRoot)
-            {
-                DatabaseEntries.Clear();
-                _language = StoreLanguage.English;
-                Logger.Info("Database: Database was reset.");
-            }
+            Logger.Info("Database: Database was reset.");
+            _instance = new Database();
         }
+
         public void Save()
         {
             Save(Locations.File.Database);
@@ -643,28 +632,25 @@ namespace Depressurizer
 
         public void Save(string path)
         {
-            lock (SyncRoot)
+            Logger.Info("Database: Saving database to '{0}'.", path);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            using (StreamWriter file = File.CreateText(path))
             {
-                Logger.Info("Database: Saving database to '{0}'.", path);
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-
-                using (StreamWriter file = File.CreateText(path))
+                JsonSerializer serializer = new JsonSerializer
                 {
-                    JsonSerializer serializer = new JsonSerializer
-                    {
 #if DEBUG
-                        Formatting = Formatting.Indented
+                    Formatting = Formatting.Indented
 #endif
-                    };
+                };
 
-                    serializer.Serialize(file, _instance);
-                }
-
-                sw.Stop();
-                Logger.Info("Database: Saved database to '{0}', in {1}ms.", path, sw.ElapsedMilliseconds);
+                serializer.Serialize(file, _instance);
             }
+
+            sw.Stop();
+            Logger.Info("Database: Saved database to '{0}', in {1}ms.", path, sw.ElapsedMilliseconds);
         }
 
         public bool SupportsVR(int appId)
@@ -746,7 +732,6 @@ namespace Depressurizer
 
             using (WebClient client = new WebClient())
             {
-                client.Encoding = Encoding.UTF8;
                 string result = client.DownloadString(Constants.HowLongToBeat);
 
                 if (result.Contains("An error has occurred."))

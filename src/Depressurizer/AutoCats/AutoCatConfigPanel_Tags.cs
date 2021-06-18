@@ -93,7 +93,8 @@ namespace Depressurizer.AutoCats
 
         public override void LoadFromAutoCat(AutoCat autoCat)
         {
-            if (!(autoCat is AutoCatTags ac))
+            AutoCatTags ac = autoCat as AutoCatTags;
+            if (ac == null)
             {
                 return;
             }
@@ -114,7 +115,8 @@ namespace Depressurizer.AutoCats
 
         public override void SaveToAutoCat(AutoCat autoCat)
         {
-            if (!(autoCat is AutoCatTags ac))
+            AutoCatTags ac = autoCat as AutoCatTags;
+            if (ac == null)
             {
                 return;
             }

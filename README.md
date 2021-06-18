@@ -4,7 +4,8 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/Depressurizer/Depressurizer.svg?style=flat-square)](https://github.com/mvegter/Depressurizer/graphs/contributors)
 [![GitHub issues](https://img.shields.io/github/issues/Depressurizer/Depressurizer.svg?style=flat-square)](https://github.com/mvegter/Depressurizer/issues)
 [![GitHub license](https://img.shields.io/github/license/Depressurizer/Depressurizer.svg?style=flat-square)](https://github.com/mvegter/Depressurizer/blob/dev/LICENSE)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/Depressurizer/Depressurizer/.NET%20Core%20Desktop/master?style=flat-square)
+[![Travis](https://img.shields.io/travis/com/Depressurizer/Depressurizer/master.svg?style=flat-square)](https://travis-ci.com/Depressurizer/Depressurizer)
+[![AppVeyor](https://img.shields.io/appveyor/ci/mvegter/depressurizer/master.svg?style=flat-square)](https://ci.appveyor.com/project/mvegter/depressurizer)
 
 <sup>This is a continuation of [rallion](https://github.com/rallion)'s [Depressurizer](https://github.com/rallion/depressurizer).</sup>
 
@@ -26,7 +27,7 @@ It also saves your configuration information independently of Steam, providing a
 
 ## Requirements
 
- - Depressurizer requires the [.NET Framework 4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47).
+ - Depressurizer requires the [.NET Framework 4.6.2](https://www.microsoft.com/en-us/download/details.aspx?id=53344).
 
  - It must be run on the same computer on which you use Steam, or one one of the computers on which you use Steam.
 

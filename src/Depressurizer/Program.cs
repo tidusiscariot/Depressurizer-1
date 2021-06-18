@@ -13,7 +13,6 @@ using NDesk.Options;
 using Newtonsoft.Json.Linq;
 using Rallion;
 using Sentry;
-using Constants = Depressurizer.Core.Helpers.Constants;
 
 namespace Depressurizer
 {
