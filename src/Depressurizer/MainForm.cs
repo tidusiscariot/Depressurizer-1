@@ -3633,7 +3633,7 @@ namespace Depressurizer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RandomGameSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void randomGameSelectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ProfileLoaded) return;
 
@@ -3644,7 +3644,7 @@ namespace Depressurizer
             //Get the GameInfo object for the game witht he index the random generator created.
             GameInfo game = (GameInfo)lstGames.GetModelObject(randomGame);
 
-            DlgRandomGame randomGameDialog = new DlgRandomGame(game);
+            using(DlgRandomGame randomGameDialog = new DlgRandomGame(game))
             randomGameDialog.ShowDialog();
         }
 
