@@ -3635,7 +3635,9 @@ namespace Depressurizer
         /// <param name="e"></param>
         private void randomGameSelectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!ProfileLoaded) return;
+            if (!ProfileLoaded) { 
+                return; 
+            }
 
             //Set the limit and generate a random number
             int maxValue = lstGames.GetItemCount();
