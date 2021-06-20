@@ -3644,8 +3644,10 @@ namespace Depressurizer
             //Get the GameInfo object for the game witht he index the random generator created.
             GameInfo game = (GameInfo)lstGames.GetModelObject(randomGame);
 
-            using(DlgRandomGame randomGameDialog = new DlgRandomGame(game))
-            randomGameDialog.ShowDialog();
+            using (DlgRandomGame dialog = new DlgRandomGame(game))
+            {
+                dialog.ShowDialog();
+            }
         }
 
         /// <summary>
