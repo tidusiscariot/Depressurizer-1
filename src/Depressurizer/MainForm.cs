@@ -3634,18 +3634,13 @@ namespace Depressurizer
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void randomGameSelectionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!ProfileLoaded) { 
-                return; 
-            }
-
             //Set the limit and generate a random number
             int maxValue = lstGames.GetItemCount();
             int randomGame = new Random().Next(maxValue);
 
             //Get the GameInfo object for the game witht he index the random generator created.
             GameInfo game = (GameInfo)lstGames.GetModelObject(randomGame);
-
+            
             using (DlgRandomGame dialog = new DlgRandomGame(game))
             {
                 dialog.ShowDialog();
